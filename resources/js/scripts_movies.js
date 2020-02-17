@@ -2,14 +2,19 @@
 $(document).ready(function() {
   //Inicializamos los calendarios
   $('.datepicker').datepicker({
-    orientation: 'bottom right',
-    container: $(document.activeElement).parent(),
-    language: 'es'
+      orientation: 'bottom right',
+      container: $(document.activeElement).parent(),
+      language: 'es'
   });
 
   $('.input-daterange input').each(function() {
-    $(this).datepicker();
+      $(this).datepicker({ 
+          orientation: 'bottom right',
+          container: $(document.activeElement).parent(),
+          language: 'es' 
+      });
   });
+  //Inicializamos los calendarios
 
   // Get: films
   $.ajax({
@@ -24,12 +29,15 @@ $(document).ready(function() {
 
   //POST: create film
   $('#createMovie').click(function(){
+    
+    var dateInit = new Date($('#movieDateInit').datepicker("getDate")).toLocaleDateString("en-US");
+    var dateEnd = new Date($('#movieDateEnd').datepicker("getDate")).toLocaleDateString("en-US");
     var film = {
         name:$('#movieTitle').val(),
         description:$('#movieSipnopsis').val(),
         url_image:$('#movieURL').val(),
-        start_date:$('#movieDateInit').val(), 
-        final_date:$('#movieDateEnd').val()
+        start_date:dateInit, 
+        final_date:dateEnd
     };
 
     $.ajax({
